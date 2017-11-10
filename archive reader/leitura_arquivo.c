@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "leitura_arquivo.h"
-#include "no.h"
-#include "lista_enc.h"
+#include "../lista_enc/no.h"
+#include "../lista_enc/lista_enc.h"
 
 #define TAMANHO 50
 //#define DEBUG
@@ -53,7 +53,7 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo)
             admin_name2_temp[TAMANHO], admin_code2_temp[TAMANHO], admin_name3_temp[TAMANHO], admin_code3_temp[TAMANHO];
 
     int ret = 0;
-    int dados_por_linha = 12;
+    int dados_por_linha = 8;
 
     FILE * arquivo = fopen(caminho_do_arquivo, "r");
     if (arquivo == NULL) {
@@ -69,7 +69,7 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo)
 
         ret = sscanf(buffer, "%s\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%f\t%f\t%hd",
                     dados->country_code, postal_code_temp, place_name_temp, admin_name1_temp, admin_code1_temp, admin_name2_temp,
-                    admin_code2_temp, admin_name3_temp, admin_code3_temp, &dados->latitude; &dados->longitude, &dados->accuracy);
+                    admin_code2_temp, admin_name3_temp, admin_code3_temp, &dados->latitude, &dados->longitude, &dados->accuracy);
 
         if (ret != dados_por_linha){
 
@@ -84,35 +84,35 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo)
 
         dados->postal_code = malloc(strlen(postal_code_temp) + 1);
         if (dados->postal_code == NULL) exit (1);
-        trncpy(dados->postal_code, postal_code_temp, strlen(postal_code_temp) + 1);
+        strncpy(dados->postal_code, postal_code_temp, strlen(postal_code_temp) + 1);
 
         dados->place_name = malloc(strlen(place_name_temp) + 1);
         if (dados->place_name == NULL) exit (1);
-        trncpy(dados->place_name, place_name_temp, strlen(place_name_temp) + 1);
+        strncpy(dados->place_name, place_name_temp, strlen(place_name_temp) + 1);
 
         dados->admin_name1 = malloc(strlen(admin_name1_temp) + 1);
         if (dados->admin_name1 == NULL) exit (1);
-        trncpy(dados->admin_name1, admin_name1_temp, strlen(admin_name1_temp) + 1);
+        strncpy(dados->admin_name1, admin_name1_temp, strlen(admin_name1_temp) + 1);
 
         dados->admin_code1 = malloc(strlen(admin_code1_temp) + 1);
         if (dados->admin_code1 == NULL) exit (1);
-        trncpy(dados->admin_code1, admin_code1_temp, strlen(admin_code1_temp) + 1);
+        strncpy(dados->admin_code1, admin_code1_temp, strlen(admin_code1_temp) + 1);
 
         dados->admin_name2 = malloc(strlen(admin_name2_temp) + 1);
         if (dados->admin_name2 == NULL) exit (1);
-        trncpy(dados->admin_name2, admin_name2_temp, strlen(admin_name2_temp) + 1);
+        strncpy(dados->admin_name2, admin_name2_temp, strlen(admin_name2_temp) + 1);
 
         dados->admin_code2 = malloc(strlen(admin_code2_temp) + 1);
         if (dados->admin_code2 == NULL) exit (1);
-        trncpy(dados->admin_code2, admin_code2_temp, strlen(admin_code2_temp) + 1);
+        strncpy(dados->admin_code2, admin_code2_temp, strlen(admin_code2_temp) + 1);
 
         dados->admin_name3 = malloc(strlen(admin_name3_temp) + 1);
         if (dados->admin_name3 == NULL) exit (1);
-        trncpy(dados->admin_name3, admin_name3_temp, strlen(admin_name3_temp) + 1);
+        strncpy(dados->admin_name3, admin_name3_temp, strlen(admin_name3_temp) + 1);
 
         dados->admin_code3 = malloc(strlen(admin_code3_temp) + 1);
         if (dados->admin_code3 == NULL) exit (1);
-        trncpy(dados->admin_code3, admin_code3_temp, strlen(admin_code3_temp) + 1);
+        strncpy(dados->admin_code3, admin_code3_temp, strlen(admin_code3_temp) + 1);
 
         add_cauda(lista_zip_code, cria_no(dados));
 
