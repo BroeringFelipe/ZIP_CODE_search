@@ -54,11 +54,13 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
     zip_code* dados;
     char buffer[300];
 
-    char    postal_code_temp[TAMANHO], place_name_temp[TAMANHO], admin_name1_temp[TAMANHO], admin_code1_temp[TAMANHO],
-            admin_name2_temp[TAMANHO], admin_code2_temp[TAMANHO], admin_name3_temp[TAMANHO], admin_code3_temp[TAMANHO];
+    char    postal_code_temp[TAMANHO],	place_name_temp[TAMANHO],	admin_name1_temp[TAMANHO],
+			admin_code1_temp[TAMANHO],	admin_name2_temp[TAMANHO],	admin_code2_temp[TAMANHO],
+			admin_name3_temp[TAMANHO],	admin_code3_temp[TAMANHO],	count_char_incremento_buffer[TAMANHO];
 
+    uint64_t incremento_buffer;
     int ret = 0;
-    int dados_por_linha = 8;
+//    int dados_por_linha = 8;
 
     FILE * arquivo = fopen(caminho_do_arquivo, "r");
     if (arquivo == NULL) {
@@ -70,16 +72,21 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 
     while(fgets(buffer, 300, arquivo) != NULL)  {
 
-        dados = malloc(sizeof(zip_code));
+    	dados = malloc(sizeof(zip_code));
+
+    	incremento_buffer = 0;
 
 /*        ret = sscanf(buffer, "%s\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t\t%80[^\"\t\"]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%f\t%f\t%hd",
                     dados->country_code, postal_code_temp, place_name_temp, admin_name1_temp, admin_code1_temp, admin_name2_temp,
                     admin_code2_temp, admin_name3_temp, admin_code3_temp, &dados->latitude, &dados->longitude, &dados->accuracy);
-*/
 
-        ret = sscanf(buffer, "%80[^;];%80[^;];%80[^;];%80[^;];%80[^;];;%80[^;];;;%80[^;];%80[^;];%80[^;];%f;%f;%hd",
-                            dados->country_code, postal_code_temp, place_name_temp, admin_name1_temp, admin_code1_temp, admin_name2_temp,
-                            admin_code2_temp, admin_name3_temp, admin_code3_temp, &dados->latitude, &dados->longitude, &dados->accuracy);
+
+        ret = sscanf(buffer, "%80[^;];%80[^;];%80[^;];%80[^;];%80[^;];%80[^;]|;%80[^;];%80[^;];%80[^;];%f;%f;%hd",
+                            dados->country_code, postal_code_temp, place_name_temp, admin_name1_temp,
+                            admin_code1_temp, admin_name2_temp,
+                            admin_code2_temp, admin_name3_temp,
+                            admin_code3_temp, &dados->latitude,
+                            &dados->longitude, &dados->accuracy);
 
 
         if (ret != dados_por_linha){
@@ -88,6 +95,166 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
             exit(EXIT_FAILURE);
 
         }
+*/
+        ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",dados->country_code);
+        if(ret == 0){
+        	dados->country_code[0] = '\0';
+        	incremento_buffer += 1;
+        }else{
+        	incremento_buffer += (strlen(dados->country_code) + 1);
+        }
+
+
+
+        ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",postal_code_temp);
+		if(ret == 0){
+			postal_code_temp[0] = '\0';
+			incremento_buffer += 1;
+		}else{
+			incremento_buffer += (strlen(postal_code_temp) + 1);
+		}
+
+
+
+		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",place_name_temp);
+		if(ret == 0){
+			place_name_temp[0] = '\0';
+			incremento_buffer += 1;
+		}else{
+			incremento_buffer += (strlen(place_name_temp) + 1);
+		}
+
+
+
+		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_name1_temp);
+		if(ret == 0){
+			admin_name1_temp[0] = '\0';
+			incremento_buffer += 1;
+		}else{
+			incremento_buffer += (strlen(admin_name1_temp) + 1);
+		}
+
+
+
+		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_code1_temp);
+		if(ret == 0){
+			admin_code1_temp[0] = '\0';
+			incremento_buffer += 1;
+		}else{
+			incremento_buffer += (strlen(admin_code1_temp) + 1);
+		}
+
+
+
+		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_code1_temp);
+		if(ret == 0){
+			admin_code1_temp[0] = '\0';
+			incremento_buffer += 1;
+		}else{
+			incremento_buffer += (strlen(admin_code1_temp) + 1);
+		}
+
+
+
+		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_name2_temp);
+		if(ret == 0){
+			admin_name2_temp[0] = '\0';
+			incremento_buffer += 1;
+		}else{
+			incremento_buffer += (strlen(admin_name2_temp) + 1);
+		}
+
+
+
+		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_code2_temp);
+		if(ret == 0){
+			admin_code2_temp[0] = '\0';
+			incremento_buffer += 1;
+		}else{
+			incremento_buffer += (strlen(admin_code2_temp) + 1);
+		}
+
+
+
+		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_name3_temp);
+		if(ret == 0){
+			admin_name3_temp[0] = '\0';
+			incremento_buffer += 1;
+		}else{
+			incremento_buffer += (strlen(admin_name3_temp) + 1);
+		}
+
+
+
+		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_code3_temp);
+		if(ret == 0){
+			admin_code3_temp[0] = '\0';
+			incremento_buffer += 1;
+		}else{
+			incremento_buffer += (strlen(admin_code3_temp) + 1);
+		}
+
+
+
+		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_code3_temp);
+		if(ret == 0){
+			admin_code3_temp[0] = '\0';
+			incremento_buffer += 1;
+		}else{
+			incremento_buffer += (strlen(admin_code3_temp) + 1);
+		}
+
+
+
+		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%f;", &dados->latitude);
+		if(ret == 0){
+			dados->latitude = 0;
+			incremento_buffer += 1;
+		}else{
+			sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",count_char_incremento_buffer);
+			incremento_buffer += (strlen(count_char_incremento_buffer) + 1);
+		}
+
+
+
+		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%f;", &dados->longitude);
+		if(ret == 0){
+			dados->latitude = 0;
+			incremento_buffer += 1;
+		}else{
+			sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",count_char_incremento_buffer);
+			incremento_buffer += (strlen(count_char_incremento_buffer) + 1);
+		}
+
+
+
+		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%hd;", &dados->accuracy);
+		if(ret == 0){
+			dados->accuracy = 0;
+			incremento_buffer += 1;
+		}else{
+			sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",count_char_incremento_buffer);
+			incremento_buffer += (strlen(count_char_incremento_buffer) + 1);
+		}
+
+
+	/*,
+                            , ,
+                            , ,
+                            , &dados->accuracy);
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 */
+
+
 
         /*  Alocacao dinamica dos nomezinhos     */
         /*  strlen retorna o tamanho da string   */
@@ -132,10 +299,11 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 
 	zip_code_count++;
 
-	printf("%d\t%s %s %s %s %s %s %s %s %s %f %f %f\n\n",
+	printf("%d\t%s %s %s %s %s %s %s %s %s %f %f %d\n\n",
 			zip_code_count,		dados->country_code, 	dados->postal_code, dados->place_name,
 			dados->admin_name1,	dados->admin_code1, 	dados->admin_name2, dados->admin_code2,
-			dados->admin_name3, dados->admin_code3, 	dados->latitude, 	dados->longitude);
+			dados->admin_name3, dados->admin_code3, 	dados->latitude, 	dados->longitude,
+			dados->accuracy);
 
 #endif
 
