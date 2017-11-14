@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 #include "leitura_arquivo.h"
 #include "../lista_enc/no.h"
 #include "../lista_enc/lista_enc.h"
 
 #define TAMANHO 50
-//#define DEBUG
+#define DEBUG
 
 /* PADRAO DA LEITURA DO ARQUIVO:
 country code      : iso country code, 2 characters
@@ -42,8 +43,12 @@ struct zip_codes {
 /*IMPLEMENTAÇÃO COM LISTAS*/
 /*------------------------*/
 
-lista_enc_t* le_arquivo(char* caminho_do_arquivo)
-{
+lista_enc_t* le_arquivo(char* caminho_do_arquivo){
+
+#ifdef DEBUG
+	uint32_t zip_code_count = 0;
+#endif
+
     lista_enc_t* lista_zip_code = cria_lista_enc();
 
     zip_code* dados;
@@ -67,9 +72,15 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo)
 
         dados = malloc(sizeof(zip_code));
 
-        ret = sscanf(buffer, "%s\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%f\t%f\t%hd",
+/*        ret = sscanf(buffer, "%s\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t\t%80[^\"\t\"]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%f\t%f\t%hd",
                     dados->country_code, postal_code_temp, place_name_temp, admin_name1_temp, admin_code1_temp, admin_name2_temp,
                     admin_code2_temp, admin_name3_temp, admin_code3_temp, &dados->latitude, &dados->longitude, &dados->accuracy);
+*/
+
+        ret = sscanf(buffer, "%80[^;];%80[^;];%80[^;];%80[^;];%80[^;];;%80[^;];;;%80[^;];%80[^;];%80[^;];%f;%f;%hd",
+                            dados->country_code, postal_code_temp, place_name_temp, admin_name1_temp, admin_code1_temp, admin_name2_temp,
+                            admin_code2_temp, admin_name3_temp, admin_code3_temp, &dados->latitude, &dados->longitude, &dados->accuracy);
+
 
         if (ret != dados_por_linha){
 
@@ -116,9 +127,19 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo)
 
         add_cauda(lista_zip_code, cria_no(dados));
 
-        printf("\t%s %s %s %s %s %s %s %s %s %f %f %d", dados->country_code, dados->postal_code, dados->place_name, dados->admin_name1,
-                dados->admin_code1, dados->admin_name2, dados->admin_code2,
-                dados->admin_name3, dados->admin_code3, dados->latitude, dados->longitude);
+
+#ifdef DEBUG
+
+	zip_code_count++;
+
+	printf("%d\t%s %s %s %s %s %s %s %s %s %f %f %f\n\n",
+			zip_code_count,		dados->country_code, 	dados->postal_code, dados->place_name,
+			dados->admin_name1,	dados->admin_code1, 	dados->admin_name2, dados->admin_code2,
+			dados->admin_name3, dados->admin_code3, 	dados->latitude, 	dados->longitude);
+
+#endif
+
+
 
     }
     fclose(arquivo);
