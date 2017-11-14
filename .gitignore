@@ -77,6 +77,11 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+*.mk
+Debug/*
+Release/*
+archive_reader/Debug/*
+archive_reader/Release/*
 
 # External tool builders
 .externalToolBuilders/

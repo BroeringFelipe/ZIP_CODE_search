@@ -116,7 +116,7 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo)
 
         add_cauda(lista_zip_code, cria_no(dados));
 
-        printf("\t%s %s %s %s %s %s %s %s %s %f %f %hd", dados->country_code, dados->postal_code, dados->place_name, dados->admin_name1,
+        printf("\t%s %s %s %s %s %s %s %s %s %f %f %d", dados->country_code, dados->postal_code, dados->place_name, dados->admin_name1,
                 dados->admin_code1, dados->admin_name2, dados->admin_code2,
                 dados->admin_name3, dados->admin_code3, dados->latitude, dados->longitude);
 

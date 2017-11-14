@@ -6,8 +6,8 @@
 
 int main()
 {
-    lista_enc_t* cep;
-    cep = le_arquivo("/home/gpdse/Ana/ZIP_CODE_search/zipcodes\ archives/BR.txt");
+    //lista_enc_t* cep;
+    //cep = le_arquivo("../zipcodes_archives/BR.txt");
     printf("Hello world!\n");
     return 0;
 }
