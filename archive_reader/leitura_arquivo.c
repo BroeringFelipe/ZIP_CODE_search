@@ -76,26 +76,7 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 
     	incremento_buffer = 0;
 
-/*        ret = sscanf(buffer, "%s\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t\t%80[^\"\t\"]\t%80[^\t]\t%80[^\t]\t%80[^\t]\t%f\t%f\t%hd",
-                    dados->country_code, postal_code_temp, place_name_temp, admin_name1_temp, admin_code1_temp, admin_name2_temp,
-                    admin_code2_temp, admin_name3_temp, admin_code3_temp, &dados->latitude, &dados->longitude, &dados->accuracy);
 
-
-        ret = sscanf(buffer, "%80[^;];%80[^;];%80[^;];%80[^;];%80[^;];%80[^;]|;%80[^;];%80[^;];%80[^;];%f;%f;%hd",
-                            dados->country_code, postal_code_temp, place_name_temp, admin_name1_temp,
-                            admin_code1_temp, admin_name2_temp,
-                            admin_code2_temp, admin_name3_temp,
-                            admin_code3_temp, &dados->latitude,
-                            &dados->longitude, &dados->accuracy);
-
-
-        if (ret != dados_por_linha){
-
-            fprintf(stderr, "erro no arquivo: %d\n", ret);
-            exit(EXIT_FAILURE);
-
-        }
-*/
         ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",dados->country_code);
         if(ret == 0){
         	dados->country_code[0] = '\0';
@@ -143,7 +124,7 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 		}else{
 			incremento_buffer += (strlen(admin_code1_temp) + 1);
 		}
-		//printf("%s    ", admin_code1_temp);
+
 
 
 		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_name2_temp);
