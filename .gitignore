@@ -224,3 +224,5 @@ xcuserdata/
 /*.gcno
 
 # End of https://www.gitignore.io/api/c,linux,macos,xcode,eclipse,windows,codeblocks
+/Debug/
+/Release/

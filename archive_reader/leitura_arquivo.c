@@ -143,17 +143,7 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 		}else{
 			incremento_buffer += (strlen(admin_code1_temp) + 1);
 		}
-
-
-
-		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_code1_temp);
-		if(ret == 0){
-			admin_code1_temp[0] = '\0';
-			incremento_buffer += 1;
-		}else{
-			incremento_buffer += (strlen(admin_code1_temp) + 1);
-		}
-
+		//printf("%s    ", admin_code1_temp);
 
 
 		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_name2_temp);
@@ -182,16 +172,6 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 			incremento_buffer += 1;
 		}else{
 			incremento_buffer += (strlen(admin_name3_temp) + 1);
-		}
-
-
-
-		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_code3_temp);
-		if(ret == 0){
-			admin_code3_temp[0] = '\0';
-			incremento_buffer += 1;
-		}else{
-			incremento_buffer += (strlen(admin_code3_temp) + 1);
 		}
 
 
@@ -272,7 +252,7 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
         if (dados->admin_name1 == NULL) exit (1);
         strncpy(dados->admin_name1, admin_name1_temp, strlen(admin_name1_temp) + 1);
 
-        dados->admin_code1 = malloc(strlen(admin_code1_temp) + 1);
+        dados->admin_code1 = (char*)malloc(strlen(admin_code1_temp) + 1);
         if (dados->admin_code1 == NULL) exit (1);
         strncpy(dados->admin_code1, admin_code1_temp, strlen(admin_code1_temp) + 1);
 
