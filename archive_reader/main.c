@@ -7,6 +7,8 @@
 int main()
 {
 	int i =0;
+	char nome_arquivos[83][3];
+
 	zip_code *paises[83];
 
     //lista_enc_t* cep;
