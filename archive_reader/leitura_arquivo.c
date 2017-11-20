@@ -7,7 +7,7 @@
 #include "../lista_enc/lista_enc.h"
 
 #define TAMANHO 50
-#define DEBUG
+//#define DEBUG
 
 /* PADRAO DA LEITURA DO ARQUIVO:
 country code      : iso country code, 2 characters
@@ -38,12 +38,17 @@ struct zip_codes {
     short int accuracy;
 
 };
-
+/*
+struct paises_zip_codes{
+	zip_code** dados;
+	int tamanho;
+};
+*/
 /*------------------------*/
 /*IMPLEMENTAÇÃO COM LISTAS*/
 /*------------------------*/
 
-void le_arquivo(char* caminho_do_arquivo, zip_code **paises, int i){
+zip_code **le_arquivo(char* caminho_do_arquivo, int *tamanho){
 
 #ifdef DEBUG
 	uint32_t zip_code_count = 0;
@@ -52,9 +57,9 @@ void le_arquivo(char* caminho_do_arquivo, zip_code **paises, int i){
     //lista_enc_t* lista_zip_code = cria_lista_enc();
 
     zip_code* dados;
+    zip_code** paises;
 
-
-
+    int i = 0;
 
     char buffer[300];
 
@@ -70,6 +75,16 @@ void le_arquivo(char* caminho_do_arquivo, zip_code **paises, int i){
         exit(EXIT_FAILURE);
     }
 
+    i=0;
+    while(fgets(buffer, 300, arquivo) != NULL)
+    	i++;	//Para contar numero de linhas
+
+    *tamanho = i;
+    paises = (zip_code**)malloc(sizeof(zip_code)* i);
+
+    rewind(arquivo);
+
+    i=0;
     while(fgets(buffer, 300, arquivo) != NULL)  {
 
     	dados = malloc(sizeof(zip_code));
@@ -211,6 +226,8 @@ void le_arquivo(char* caminho_do_arquivo, zip_code **paises, int i){
 
         //add_cauda(lista_zip_code, cria_no(dados));
 
+        paises[i]= dados;
+        i++;
 
 #ifdef DEBUG
 
@@ -226,8 +243,8 @@ void le_arquivo(char* caminho_do_arquivo, zip_code **paises, int i){
 
     }
     fclose(arquivo);
-    paises[i] = dados;
-  //  return lista_zip_code;
+
+    return paises;
 
 }
 /*5
@@ -248,3 +265,16 @@ void libera_lista(lista_enc_t* lista){
 
     free(lista);
 }*/
+/*
+void imprimir_vetor(zip_code **paises, int i,){
+
+	zip_code_count++;
+
+	printf("%d\t%s %s %s %s %s %s %s %s %s %f %f %d\n\n",
+			zip_code_count,		dados->country_code, 	dados->postal_code, dados->place_name,
+			dados->admin_name1,	dados->admin_code1, 	dados->admin_name2, dados->admin_code2,
+			dados->admin_name3, dados->admin_code3, 	dados->latitude, 	dados->longitude,
+			dados->accuracy);
+
+}
+*/

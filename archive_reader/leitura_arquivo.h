@@ -8,7 +8,8 @@
 #define LEITURA_ARQUIVO_H_INCLUDED
 
 typedef struct zip_codes zip_code;
+//typedef struct paises_zip_codes paises_zip_code;
 
-void le_arquivo(char* caminho_do_arquivo, zip_code **paises, int i);
+zip_code **le_arquivo(char* caminho_do_arquivo, int* tamanho);
 
 #endif // LEITURA_ARQUIVO_H_INCLUDED
