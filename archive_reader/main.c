@@ -6,8 +6,11 @@
 
 int main()
 {
-    lista_enc_t* cep;
-    cep = le_arquivo("../zipcodes_archives/BR.txt");
+	int i =0;
+	zip_code *paises[83];
+
+    //lista_enc_t* cep;
+    le_arquivo("../zipcodes_archives/BR.txt", paises, i);
     printf("Hello world!\n");
     return 0;
 }

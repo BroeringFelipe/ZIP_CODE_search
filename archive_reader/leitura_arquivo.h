@@ -9,6 +9,6 @@
 
 typedef struct zip_codes zip_code;
 
-lista_enc_t* le_arquivo(char* caminho_do_arquivo);
+void le_arquivo(char* caminho_do_arquivo, zip_code **paises, int i);
 
 #endif // LEITURA_ARQUIVO_H_INCLUDED

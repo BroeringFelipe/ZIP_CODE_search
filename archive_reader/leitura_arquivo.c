@@ -43,15 +43,19 @@ struct zip_codes {
 /*IMPLEMENTAÇÃO COM LISTAS*/
 /*------------------------*/
 
-lista_enc_t* le_arquivo(char* caminho_do_arquivo){
+void le_arquivo(char* caminho_do_arquivo, zip_code **paises, int i){
 
 #ifdef DEBUG
 	uint32_t zip_code_count = 0;
 #endif
 
-    lista_enc_t* lista_zip_code = cria_lista_enc();
+    //lista_enc_t* lista_zip_code = cria_lista_enc();
 
     zip_code* dados;
+
+
+
+
     char buffer[300];
 
     char    postal_code_temp[TAMANHO],	place_name_temp[TAMANHO],	admin_name1_temp[TAMANHO],
@@ -60,15 +64,11 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 
     uint64_t incremento_buffer;
     int ret = 0;
-//    int dados_por_linha = 8;
-
     FILE * arquivo = fopen(caminho_do_arquivo, "r");
     if (arquivo == NULL) {
         perror("Erro em 'le_arquivo()' - fopen");
         exit(EXIT_FAILURE);
     }
-
-    //fgets(buffer, 300, arquivo);
 
     while(fgets(buffer, 300, arquivo) != NULL)  {
 
@@ -85,8 +85,6 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
         	incremento_buffer += (strlen(dados->country_code) + 1);
         }
 
-
-
         ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",postal_code_temp);
 		if(ret == 0){
 			postal_code_temp[0] = '\0';
@@ -94,8 +92,6 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 		}else{
 			incremento_buffer += (strlen(postal_code_temp) + 1);
 		}
-
-
 
 		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",place_name_temp);
 		if(ret == 0){
@@ -105,8 +101,6 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 			incremento_buffer += (strlen(place_name_temp) + 1);
 		}
 
-
-
 		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_name1_temp);
 		if(ret == 0){
 			admin_name1_temp[0] = '\0';
@@ -114,8 +108,6 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 		}else{
 			incremento_buffer += (strlen(admin_name1_temp) + 1);
 		}
-
-
 
 		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_code1_temp);
 		if(ret == 0){
@@ -125,8 +117,6 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 			incremento_buffer += (strlen(admin_code1_temp) + 1);
 		}
 
-
-
 		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_name2_temp);
 		if(ret == 0){
 			admin_name2_temp[0] = '\0';
@@ -134,8 +124,6 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 		}else{
 			incremento_buffer += (strlen(admin_name2_temp) + 1);
 		}
-
-
 
 		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_code2_temp);
 		if(ret == 0){
@@ -145,8 +133,6 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 			incremento_buffer += (strlen(admin_code2_temp) + 1);
 		}
 
-
-
 		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_name3_temp);
 		if(ret == 0){
 			admin_name3_temp[0] = '\0';
@@ -155,8 +141,6 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 			incremento_buffer += (strlen(admin_name3_temp) + 1);
 		}
 
-
-
 		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",admin_code3_temp);
 		if(ret == 0){
 			admin_code3_temp[0] = '\0';
@@ -164,8 +148,6 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 		}else{
 			incremento_buffer += (strlen(admin_code3_temp) + 1);
 		}
-
-
 
 		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%f;", &dados->latitude);
 		if(ret == 0){
@@ -176,8 +158,6 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 			incremento_buffer += (strlen(count_char_incremento_buffer) + 1);
 		}
 
-
-
 		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%f;", &dados->longitude);
 		if(ret == 0){
 			dados->latitude = 0;
@@ -186,8 +166,6 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 			sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",count_char_incremento_buffer);
 			incremento_buffer += (strlen(count_char_incremento_buffer) + 1);
 		}
-
-
 
 		ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%hd;", &dados->accuracy);
 		if(ret == 0){
@@ -198,28 +176,6 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 			incremento_buffer += (strlen(count_char_incremento_buffer) + 1);
 		}
 
-
-	/*,
-                            , ,
-                            , ,
-                            , &dados->accuracy);
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
-	 */
-
-
-
-        /*  Alocacao dinamica dos nomezinhos     */
-        /*  strlen retorna o tamanho da string   */
-        /*  "+1" para o /n e tal                 */
 
         dados->postal_code = malloc(strlen(postal_code_temp) + 1);
         if (dados->postal_code == NULL) exit (1);
@@ -253,7 +209,7 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
         if (dados->admin_code3 == NULL) exit (1);
         strncpy(dados->admin_code3, admin_code3_temp, strlen(admin_code3_temp) + 1);
 
-        add_cauda(lista_zip_code, cria_no(dados));
+        //add_cauda(lista_zip_code, cria_no(dados));
 
 
 #ifdef DEBUG
@@ -268,15 +224,13 @@ lista_enc_t* le_arquivo(char* caminho_do_arquivo){
 
 #endif
 
-
-
     }
     fclose(arquivo);
-
-    return lista_zip_code;
+    paises[i] = dados;
+  //  return lista_zip_code;
 
 }
-/*
+/*5
 void libera_lista(lista_enc_t* lista){
     while (1){
         temporada* dados = obtem_dado(obtem_cabeca(lista));
