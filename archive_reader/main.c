@@ -7,7 +7,7 @@
 int main()
 {
 	int i =0;
-	char nome_arquivos[83][3];
+	char nome_arquivos[83];
 
 	zip_code *paises[83];
 
