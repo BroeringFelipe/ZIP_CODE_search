@@ -16,7 +16,10 @@ int main()
 	int i = 0;
 	paises_zip_code paises[83];
 	char endereco[] = "../zipcodes_archives/";
-	char endereco_temp[50];
+    
+    //char endereco[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/";
+    
+	char endereco_temp[500];
 
 	char nome_arquivos[83][3] = {	"AD", "AR", "AS", "AT", "AU", "AX", "BD", "BE", "BG", "BM", "BR", "BY", "CA",
 									"CH", "CO", "CR", "CZ", "DE", "DK", "DO", "DZ", "ES", "FI", "FO", "FR", "GB",
@@ -24,7 +27,7 @@ int main()
 									"JE", "JP", "LI", "LK", "LT", "LU", "LV", "MC", "MD", "MH", "MK", "MP", "MQ",
 									"MT", "MX", "MY", "NC", "NL", "NO", "NZ", "PH", "PK", "PL", "PM", "PR", "PT",
 									"RE", "RO", "RU", "SE", "SI", "SJ", "SK", "SM", "TH", "TR", "UA", "US", "UY",
-									"VA", "VI", "WF", "YT", "ZA"};
+									"VA", "VI", "WF", "YT", "ZA"    };
 
 	for(i = 0; i < 83; i++){
 		strcpy(endereco_temp, endereco);
