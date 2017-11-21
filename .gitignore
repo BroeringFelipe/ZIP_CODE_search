@@ -222,6 +222,8 @@ xcuserdata/
 !*.xcodeproj/xcshareddata/
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
+!*.Icon/*
+!*.archive_reader/archive_reader.xcodeproj/*
 
 # End of https://www.gitignore.io/api/c,linux,macos,xcode,eclipse,windows,codeblocks
 /Debug/
