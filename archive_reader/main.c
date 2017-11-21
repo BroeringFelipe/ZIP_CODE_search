@@ -1,9 +1,38 @@
+/*
+ ============================================================================
+ Name        : main.c
+ Author      :
+ Version     :
+ Copyright   :
+ Description :
+ ============================================================================
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../lista_enc/lista_enc.h"
-#include "../lista_enc/no.h"
+
 #include "leitura_arquivo.h"
+#include "quicksort.h"
+
+
+
+#define DEBUG
+//#undef DEBUG
+
+#ifdef DEBUG
+	#include <time.h>
+	#include <limits.h>
+	#include <stdint.h>
+	#include <unistd.h>
+
+    struct timespec t_debug_1;
+    struct timespec t_debug_2;
+
+    double sum_t_debug_1, sum_t_debug_2, media_tempo_f;
+#endif
+
+
 
 typedef struct paises_zip_codes{
 	zip_code** dados;
@@ -29,6 +58,10 @@ int main()
 									"RE", "RO", "RU", "SE", "SI", "SJ", "SK", "SM", "TH", "TR", "UA", "US", "UY",
 									"VA", "VI", "WF", "YT", "ZA"    };
 
+#ifdef DEBUG
+    clock_gettime(CLOCK_MONOTONIC ,&t_debug_1);
+#endif
+
 	for(i = 0; i < 83; i++){
 		strcpy(endereco_temp, endereco);
 		strcat(endereco_temp, nome_arquivos[i]);
@@ -36,6 +69,49 @@ int main()
 
 		paises[i].dados = le_arquivo(endereco_temp, &paises[i].tamanho);
 	}
+
+#ifdef DEBUG
+	clock_gettime(CLOCK_MONOTONIC ,&t_debug_2);
+
+
+	sum_t_debug_1 = (double)(unsigned)t_debug_1.tv_nsec / 1000000.0;
+	sum_t_debug_1 += ((double)(unsigned)t_debug_1.tv_sec * 1000);
+
+	sum_t_debug_2 = (double)(unsigned)t_debug_2.tv_nsec / 1000000.0;
+	sum_t_debug_2 += ((double)(unsigned)t_debug_2.tv_sec * 1000);
+
+	media_tempo_f = sum_t_debug_2 - sum_t_debug_1;
+
+
+	printf("Tempo leitura dos arquivos: \t\t%.3fms\n\n", media_tempo_f);
+	clock_gettime(CLOCK_MONOTONIC ,&t_debug_1);
+#endif
+
+	for(i = 0; i < 83; i++){
+		quicksort(paises[i].dados, 0, (paises[i].tamanho - 1));
+	}
+
+#ifdef DEBUG
+	clock_gettime(CLOCK_MONOTONIC ,&t_debug_2);
+
+
+	sum_t_debug_1 = (double)(unsigned)t_debug_1.tv_nsec / 1000000.0;
+	sum_t_debug_1 += ((double)(unsigned)t_debug_1.tv_sec * 1000);
+
+	sum_t_debug_2 = (double)(unsigned)t_debug_2.tv_nsec / 1000000.0;
+	sum_t_debug_2 += ((double)(unsigned)t_debug_2.tv_sec * 1000);
+
+	media_tempo_f = sum_t_debug_2 - sum_t_debug_1;
+
+
+	printf("Tempo de execucao quicksort: \t\t%.3fms\n\n", media_tempo_f);
+	clock_gettime(CLOCK_MONOTONIC ,&t_debug_1);
+#endif
+
+
+	printf("\n\n\n");
+	imprime_zip_code(paises[3].dados, paises[3].tamanho);
+
 
 
     return 0;

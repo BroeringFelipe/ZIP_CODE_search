@@ -1,3 +1,13 @@
+/*
+ ============================================================================
+ Name        : leitura_arquivo.c
+ Author      :
+ Version     :
+ Copyright   :
+ Description :
+ ============================================================================
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -36,7 +46,6 @@ struct zip_codes {
     float latitude;
     float longitude;
     short int accuracy;
-
 };
 /*
 struct paises_zip_codes{
@@ -247,7 +256,33 @@ zip_code **le_arquivo(char* caminho_do_arquivo, int *tamanho){
     return paises;
 
 }
-/*5
+
+void imprime_zip_code(zip_code **dados, int tamanho){
+	int i;
+
+	for(i=0; i<tamanho; i++){
+
+		printf("%d\t%s %s %s %s %s %s %s %s %s %f %f %d\n\n",
+				i,						dados[i]->country_code, 	dados[i]->postal_code, 	dados[i]->place_name,
+				dados[i]->admin_name1,	dados[i]->admin_code1, 		dados[i]->admin_name2, 	dados[i]->admin_code2,
+				dados[i]->admin_name3, 	dados[i]->admin_code3, 		dados[i]->latitude, 	dados[i]->longitude,
+				dados[i]->accuracy);
+
+	}
+}
+
+char *get_place_name(zip_code **dados, int i){
+
+	if (dados == NULL)	{
+		fprintf(stderr,"get_place_name: dado invalido!");
+		exit(EXIT_FAILURE);
+	}
+
+	return dados[i]->place_name;
+
+}
+
+/*
 void libera_lista(lista_enc_t* lista){
     while (1){
         temporada* dados = obtem_dado(obtem_cabeca(lista));
@@ -264,17 +299,5 @@ void libera_lista(lista_enc_t* lista){
     }
 
     free(lista);
-}*/
-/*
-void imprimir_vetor(zip_code **paises, int i,){
-
-	zip_code_count++;
-
-	printf("%d\t%s %s %s %s %s %s %s %s %s %f %f %d\n\n",
-			zip_code_count,		dados->country_code, 	dados->postal_code, dados->place_name,
-			dados->admin_name1,	dados->admin_code1, 	dados->admin_name2, dados->admin_code2,
-			dados->admin_name3, dados->admin_code3, 	dados->latitude, 	dados->longitude,
-			dados->accuracy);
-
 }
 */
