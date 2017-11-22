@@ -16,7 +16,7 @@
 #include "quicksort.h"
 
 
-
+#define n_countries	83
 #define DEBUG
 //#undef DEBUG
 
@@ -35,11 +35,14 @@
 
 int main(){
 
-	int i = 0;
-	int j;
-	paises_zip_code *paises[83];
+	int i, j;
+	paises_zip_code *paises[n_countries];
 	char endereco[] = "../zipcodes_archives/";
     
+	for(i=0; i<n_countries; i++){
+		paises[i] = creat_paises_zip_code();
+	}
+
     //char endereco[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/";
 
 	char endereco_temp[500];
@@ -62,15 +65,10 @@ int main(){
 		strcat(endereco_temp, nome_arquivos[i]);
 		strcat(endereco_temp, ".txt");
 
-		le_arquivo(endereco_temp, &paises[i]);
+		le_arquivo(endereco_temp, paises[i]);
 
-		j+= country_get_tamanho(&paises[i]);
+		j+= country_get_tamanho(paises[i]);
 	}
-
-
-printf("%d\n\n", j);
-/*
-	printf("\n\n%d\n\n", j);
 
 #ifdef DEBUG
 	clock_gettime(CLOCK_MONOTONIC ,&t_debug_2);
@@ -114,7 +112,6 @@ printf("%d\n\n", j);
 	printf("\n\n\n");
 	imprime_zip_code(country_get_data(paises[0]), country_get_tamanho(paises[0]));
 
-*/
 
     return 0;
 }

@@ -20,6 +20,8 @@
 typedef struct zip_codes zip_code;
 typedef struct paises_zip_codes paises_zip_code;
 
+paises_zip_code* creat_paises_zip_code();
+
 void le_arquivo(char* caminho_do_arquivo, paises_zip_code* country);
 void imprime_zip_code(zip_code **dados, int tamanho);
 

@@ -57,6 +57,10 @@ struct paises_zip_codes{
 /*IMPLEMENTAÇÃO COM LISTAS*/
 /*------------------------*/
 
+paises_zip_code* creat_paises_zip_code(){
+	return ((paises_zip_code*)malloc(sizeof(paises_zip_code)));
+}
+
 void le_arquivo(char* caminho_do_arquivo, paises_zip_code* country){
 
 #ifdef DEBUG
