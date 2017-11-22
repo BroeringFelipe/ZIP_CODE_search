@@ -33,21 +33,15 @@
 #endif
 
 
+int main(){
 
-typedef struct paises_zip_codes{
-	zip_code** dados;
-	int tamanho;
-} paises_zip_code;
-
-
-int main()
-{
 	int i = 0;
-	paises_zip_code paises[83];
+	int j;
+	paises_zip_code *paises[83];
 	char endereco[] = "../zipcodes_archives/";
     
     //char endereco[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/";
-    
+
 	char endereco_temp[500];
 
 	char nome_arquivos[83][3] = {	"AD", "AR", "AS", "AT", "AU", "AX", "BD", "BE", "BG", "BM", "BR", "BY", "CA",
@@ -61,14 +55,22 @@ int main()
 #ifdef DEBUG
     clock_gettime(CLOCK_MONOTONIC ,&t_debug_1);
 #endif
+    j = 0;
 
 	for(i = 0; i < 83; i++){
 		strcpy(endereco_temp, endereco);
 		strcat(endereco_temp, nome_arquivos[i]);
 		strcat(endereco_temp, ".txt");
 
-		paises[i].dados = le_arquivo(endereco_temp, &paises[i].tamanho);
+		le_arquivo(endereco_temp, &paises[i]);
+
+		j+= country_get_tamanho(&paises[i]);
 	}
+
+
+printf("%d\n\n", j);
+/*
+	printf("\n\n%d\n\n", j);
 
 #ifdef DEBUG
 	clock_gettime(CLOCK_MONOTONIC ,&t_debug_2);
@@ -88,7 +90,7 @@ int main()
 #endif
 
 	for(i = 0; i < 83; i++){
-		quicksort(paises[i].dados, 0, (paises[i].tamanho - 1));
+		quicksort(country_get_data(paises[i]), 0, (country_get_tamanho(paises[i]) - 1));
 	}
 
 #ifdef DEBUG
@@ -110,9 +112,9 @@ int main()
 
 
 	printf("\n\n\n");
-	imprime_zip_code(paises[3].dados, paises[3].tamanho);
+	imprime_zip_code(country_get_data(paises[0]), country_get_tamanho(paises[0]));
 
-
+*/
 
     return 0;
 }

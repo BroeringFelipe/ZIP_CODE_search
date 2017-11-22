@@ -47,27 +47,25 @@ struct zip_codes {
     float longitude;
     short int accuracy;
 };
-/*
+
 struct paises_zip_codes{
 	zip_code** dados;
 	int tamanho;
 };
-*/
+
 /*------------------------*/
 /*IMPLEMENTAÇÃO COM LISTAS*/
 /*------------------------*/
 
-zip_code **le_arquivo(char* caminho_do_arquivo, int *tamanho){
+void le_arquivo(char* caminho_do_arquivo, paises_zip_code* country){
 
 #ifdef DEBUG
-	uint32_t zip_code_count = 0;
+	uint64_t zip_code_count = 0;
 #endif
-
-    //lista_enc_t* lista_zip_code = cria_lista_enc();
 
     zip_code* dados;
     zip_code** paises;
-
+    //country = (paises_zip_code*)malloc(sizeof(paises_zip_code));
     int i = 0;
 
     char buffer[300];
@@ -88,7 +86,7 @@ zip_code **le_arquivo(char* caminho_do_arquivo, int *tamanho){
     while(fgets(buffer, 300, arquivo) != NULL)
     	i++;	//Para contar numero de linhas
 
-    *tamanho = i;
+    country->tamanho = i;
     paises = (zip_code**)malloc(sizeof(zip_code)* i);
 
     rewind(arquivo);
@@ -233,8 +231,6 @@ zip_code **le_arquivo(char* caminho_do_arquivo, int *tamanho){
         if (dados->admin_code3 == NULL) exit (1);
         strncpy(dados->admin_code3, admin_code3_temp, strlen(admin_code3_temp) + 1);
 
-        //add_cauda(lista_zip_code, cria_no(dados));
-
         paises[i]= dados;
         i++;
 
@@ -253,11 +249,12 @@ zip_code **le_arquivo(char* caminho_do_arquivo, int *tamanho){
     }
     fclose(arquivo);
 
-    return paises;
+    country->dados = paises;
 
 }
 
 void imprime_zip_code(zip_code **dados, int tamanho){
+
 	int i;
 
 	for(i=0; i<tamanho; i++){
@@ -271,6 +268,43 @@ void imprime_zip_code(zip_code **dados, int tamanho){
 	}
 }
 
+zip_code **country_get_data(paises_zip_code* country){
+
+	if (country == NULL)	{
+		fprintf(stderr,"country_get_data: invalid country pointer!");
+		exit(EXIT_FAILURE);
+	}
+
+	return country->dados;
+}
+
+void country_set_data(paises_zip_code* country, zip_code** data){
+
+	if (country == NULL)	{
+		fprintf(stderr,"country_set_data: invalid country pointer!");
+		exit(EXIT_FAILURE);
+	}
+
+	if (data == NULL)	{
+		fprintf(stderr,"country_set_data: invalid data pointer!");
+		exit(EXIT_FAILURE);
+	}
+
+	country->dados = data;
+
+}
+
+int country_get_tamanho(paises_zip_code* country){
+
+	if (country == NULL)	{
+		fprintf(stderr,"country_get_tamanho: invalid country pointer!");
+		exit(EXIT_FAILURE);
+	}
+
+	return country->tamanho;
+
+}
+
 char *get_place_name(zip_code **dados, int i){
 
 	if (dados == NULL)	{
@@ -281,6 +315,8 @@ char *get_place_name(zip_code **dados, int i){
 	return dados[i]->place_name;
 
 }
+
+
 
 /*
 void libera_lista(lista_enc_t* lista){
