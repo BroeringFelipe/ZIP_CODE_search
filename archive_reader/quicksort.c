@@ -38,7 +38,7 @@ int partition(zip_code **dados, int esq, int dir){
 
 	med = mediana(dados, esq, dir);
 
-	pivot = get_place_name(dados, med);
+	pivot = data_get_place_name(dados, med);
 	i = esq - 1;
 	j = dir + 1;
 
@@ -46,11 +46,11 @@ int partition(zip_code **dados, int esq, int dir){
 
 		do{
 			i = i + 1;
-		}while((strncmp(get_place_name(dados, i), pivot, 50)) < 0);
+		}while((strncmp(data_get_place_name(dados, i), pivot, 50)) < 0);
 
 		do{
 			j = j - 1;
-		}while((strncmp(get_place_name(dados, j), pivot, 50)) > 0);
+		}while((strncmp(data_get_place_name(dados, j), pivot, 50)) > 0);
 
 		if(i >= j){
 			return j;
@@ -68,15 +68,15 @@ int mediana(zip_code **dados, int esq, int dir){
 	med = (esq + dir)/2;
 
 
-	if((strncmp(get_place_name(dados, esq),get_place_name(dados, dir), 50)) < 0){
+	if((strncmp(data_get_place_name(dados, esq),data_get_place_name(dados, dir), 50)) < 0){
 		swap_dados(dados, esq, dir);
 	}
 
-	if((strncmp(get_place_name(dados, med),get_place_name(dados, esq), 50)) < 0){
+	if((strncmp(data_get_place_name(dados, med),data_get_place_name(dados, esq), 50)) < 0){
 		swap_dados(dados, med, esq);
 	}
 
-	if((strncmp(get_place_name(dados, dir),get_place_name(dados, med), 50)) < 0){
+	if((strncmp(data_get_place_name(dados, dir),data_get_place_name(dados, med), 50)) < 0){
 		swap_dados(dados, dir, med);
 	}
 

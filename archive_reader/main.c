@@ -36,11 +36,11 @@
 int main(){
 
 	int i, j;
-	paises_zip_code *paises[n_countries];
+	country_zip_code *countries[n_countries];
 	char endereco[] = "../zipcodes_archives/";
     
 	for(i=0; i<n_countries; i++){
-		paises[i] = creat_paises_zip_code();
+		countries[i] = creat_country_zip_code();
 	}
 
     //char endereco[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/";
@@ -65,9 +65,9 @@ int main(){
 		strcat(endereco_temp, nome_arquivos[i]);
 		strcat(endereco_temp, ".txt");
 
-		le_arquivo(endereco_temp, paises[i]);
+		read_archive(endereco_temp, countries[i]);
 
-		j+= country_get_tamanho(paises[i]);
+		j+= country_get_tamanho(countries[i]);
 	}
 
 #ifdef DEBUG
@@ -88,7 +88,7 @@ int main(){
 #endif
 
 	for(i = 0; i < 83; i++){
-		quicksort(country_get_data(paises[i]), 0, (country_get_tamanho(paises[i]) - 1));
+		quicksort(country_get_data(countries[i]), 0, (country_get_tamanho(countries[i]) - 1));
 	}
 
 #ifdef DEBUG
@@ -110,7 +110,7 @@ int main(){
 
 
 	printf("\n\n\n");
-	imprime_zip_code(country_get_data(paises[0]), country_get_tamanho(paises[0]));
+	imprime_zip_code(country_get_data(countries[0]), country_get_tamanho(countries[0]));
 
 
     return 0;
