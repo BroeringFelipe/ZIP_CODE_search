@@ -53,10 +53,6 @@ struct countries_zip_codes{
 	int tamanho;
 };
 
-/*------------------------*/
-/*IMPLEMENTAÇÃO COM LISTAS*/
-/*------------------------*/
-
 country_zip_code* creat_country_zip_code(){
 	return ((country_zip_code*)malloc(sizeof(country_zip_code)));
 }
@@ -242,7 +238,7 @@ void read_archive(char* file_path, country_zip_code* country){
 
 	zip_code_count++;
 
-	printf("%d\t%s %s %s %s %s %s %s %s %s %f %f %d\n\n",
+        printf("%llu\t%s %s %s %s %s %s %s %s %s %f %f %d\n\n",
 			zip_code_count,		data->country_code, 	data->postal_code, data->place_name,
 			data->admin_name1,	data->admin_code1, 	data->admin_name2, data->admin_code2,
 			data->admin_name3, data->admin_code3, 	data->latitude, 	data->longitude,

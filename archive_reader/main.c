@@ -37,13 +37,15 @@ int main(){
 
 	int i, j;
 	country_zip_code *countries[n_countries];
-	char endereco[] = "../zipcodes_archives/";
+    char endereco[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/";
+    
+	//char endereco[] = "../zipcodes_archives/";
     
 	for(i=0; i<n_countries; i++){
 		countries[i] = creat_country_zip_code();
 	}
 
-    //char endereco[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/";
+    
 
 	char endereco_temp[500];
 
