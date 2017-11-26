@@ -36,7 +36,7 @@
 
 int main(){
 
-	int i, j;
+	int i;
 	country_zip_code *countries[n_countries];
 	country_zip_code *one_archive;
 	char endereco[] = "../zipcodes_archives/";
@@ -115,8 +115,8 @@ int main(){
 	printf("\n\n\n");
 
 	one_archive = organize_database(countries, n_countries);
-	imprime_zip_code(country_get_data(one_archive), country_get_tamanho(one_archive));
+	//imprime_zip_code(country_get_data(one_archive), country_get_tamanho(one_archive));
 
-	printf("hello");
+	printf("hello\n");
     return 0;
 }

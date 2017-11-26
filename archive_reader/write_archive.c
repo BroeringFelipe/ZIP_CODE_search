@@ -41,8 +41,6 @@ country_zip_code *organize_database(country_zip_code **countries, int countries_
 		index_country[i] = 0;
 	}
 
-printf("\n\n%d\n\n", n_addresses);
-
 	i=0;
 	for(aux_letter = 0; aux_letter < 255; aux_letter++){
 
@@ -51,7 +49,7 @@ printf("\n\n%d\n\n", n_addresses);
 
 			if(country_get_tamanho(countries[j]) > (index_country[j])){
 				place_name = data_get_place_name(data_countries, index_country[j]);
-				while(place_name[0] == aux_letter){
+				while((unsigned char)place_name[0] == aux_letter){
 					data_one_archive[i] = data_countries[index_country[j]];
 					index_country[j]++;
 					i++;
@@ -64,6 +62,18 @@ printf("\n\n%d\n\n", n_addresses);
 			}
 		}
 	}
+
+#ifdef	DEBUG
+	printf("\n\n%d\n\n", n_addresses);
+
+	for(i=0; i<countries_len; i++){
+		printf("%d\t%d\t%d\n", i, country_get_tamanho(countries[i]), index_country[i]);
+	}
+	place_name = data_get_place_name(country_get_data(countries[8]), index_country[5]);
+	printf("\n\n%s\n\n",place_name);
+
+	printf("\n\n%d\n\n",place_name[0]);
+#endif
 
 	return one_archive;
 }
