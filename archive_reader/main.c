@@ -13,6 +13,7 @@
 #include <string.h>
 
 #include "leitura_arquivo.h"
+#include "write_archive.h"
 #include "quicksort.h"
 
 
@@ -37,10 +38,11 @@ int main(){
 
 	int i, j;
 	country_zip_code *countries[n_countries];
+	country_zip_code *one_archive;
 	char endereco[] = "../zipcodes_archives/";
     
 	for(i=0; i<n_countries; i++){
-		countries[i] = creat_country_zip_code();
+		countries[i] = create_country_zip_code();
 	}
 
     //char endereco[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/";
@@ -58,7 +60,7 @@ int main(){
 #ifdef DEBUG
     clock_gettime(CLOCK_MONOTONIC ,&t_debug_1);
 #endif
-    j = 0;
+
 
 	for(i = 0; i < 83; i++){
 		strcpy(endereco_temp, endereco);
@@ -66,8 +68,6 @@ int main(){
 		strcat(endereco_temp, ".txt");
 
 		read_archive(endereco_temp, countries[i]);
-
-		j+= country_get_tamanho(countries[i]);
 	}
 
 #ifdef DEBUG
@@ -110,8 +110,10 @@ int main(){
 
 
 	printf("\n\n\n");
-	imprime_zip_code(country_get_data(countries[0]), country_get_tamanho(countries[0]));
 
+	one_archive = organize_database(countries, n_countries);
+	imprime_zip_code(country_get_data(one_archive), country_get_tamanho(one_archive));
 
+	printf("hello");
     return 0;
 }

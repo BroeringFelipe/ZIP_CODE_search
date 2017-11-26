@@ -57,10 +57,26 @@ struct countries_zip_codes{
 /*IMPLEMENTAÇÃO COM LISTAS*/
 /*------------------------*/
 
-country_zip_code* creat_country_zip_code(){
+country_zip_code* create_country_zip_code(){
 	return ((country_zip_code*)malloc(sizeof(country_zip_code)));
 }
 
+zip_code **create_data_vector(int array_len){
+	return (zip_code**)malloc(sizeof(zip_code)* array_len);
+}
+
+void country_set_tamanho(country_zip_code* country, int array_len){
+	country->tamanho = array_len;
+}
+/*
+void data_array_set_data(zip_code **data_array, zip_code *data, int i){
+	data_array[i]=data;
+}
+
+void data_array_set_data(zip_code **data_array, zip_code *data, int i){
+	return data_array[i]->data;
+}
+*/
 void read_archive(char* file_path, country_zip_code* country){
 
 #ifdef DEBUG
@@ -91,7 +107,7 @@ void read_archive(char* file_path, country_zip_code* country){
     	i++;	//Count number of lines
 
     country->tamanho = i;
-    data_vector = (zip_code**)malloc(sizeof(zip_code)* i);
+    data_vector = create_data_vector(i);
 
     rewind(arquivo);
 
