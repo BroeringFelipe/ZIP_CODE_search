@@ -40,12 +40,15 @@ int main(){
 	country_zip_code *countries[n_countries];
 	country_zip_code *one_archive;
 	char endereco[] = "../zipcodes_archives/";
+
+    //char endereco[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/";
+
     
 	for(i=0; i<n_countries; i++){
 		countries[i] = create_country_zip_code();
 	}
 
-    //char endereco[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/";
+    
 
 	char endereco_temp[500];
 

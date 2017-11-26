@@ -13,6 +13,7 @@
 #include <string.h>
 #include "leitura_arquivo.h"
 
+
 country_zip_code *organize_database(country_zip_code **countries, int countries_len){
 
 	int i, j, n_addresses;
