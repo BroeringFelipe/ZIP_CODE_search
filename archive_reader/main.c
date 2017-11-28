@@ -40,7 +40,6 @@ int main(){
 	country_zip_code *countries[n_countries];
 	country_zip_code *one_archive;
 	char endereco[] = "../zipcodes_archives/";
-
     //char endereco[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/";
 
     
@@ -117,6 +116,17 @@ int main(){
 	one_archive = organize_database(countries, n_countries);
 	//imprime_zip_code(country_get_data(one_archive), country_get_tamanho(one_archive));
 
+
+	//Clear memory
+	for(i=0; i<n_countries; i++){
+		free_zip_code(countries[i]);
+	}
+
+	free(country_get_data(one_archive));
+	free(one_archive);
+
+
 	printf("hello\n");
+
     return 0;
 }

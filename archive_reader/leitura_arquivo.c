@@ -333,24 +333,22 @@ char* data_get_place_name(zip_code **data, int i){
 
 }
 
+void free_zip_code(country_zip_code *country){
 
+	int i;
 
-/*
-void libera_lista(lista_enc_t* lista){
-    while (1){
-        temporada* dados = obtem_dado(obtem_cabeca(lista));
+	for(i=0; i < (country->tamanho); i++){
+		free(country->data[i]->postal_code);
+		free(country->data[i]->place_name);
+		free(country->data[i]->admin_name1);
+		free(country->data[i]->admin_name2);
+		free(country->data[i]->admin_name3);
+		free(country->data[i]->admin_code1);
+		free(country->data[i]->admin_code2);
+		free(country->data[i]->admin_code3);
+		free(country->data[i]);
+	}
 
-        free(dados->contry);
-        free(dados->name);
-        free(dados->team);
-        free(dados->engine);
-        free(dados->clinched);
-        free(dados->race);
-
-        if(obtem_tamanho(lista) == 0)
-            break;
-    }
-
-    free(lista);
+	free(country->data);
+	free(country);
 }
-*/

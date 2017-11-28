@@ -35,5 +35,7 @@ char* data_get_place_name(zip_code **dados, int i);
 //void data_array_set_data(zip_code **data_array, zip_code *data, int i);
 //zip_code* data_array_get_data(zip_code **data_array, int i);
 
+void free_zip_code(country_zip_code *country);
+
 
 #endif // LEITURA_ARQUIVO_H_INCLUDED
