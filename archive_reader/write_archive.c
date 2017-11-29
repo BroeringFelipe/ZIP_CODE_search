@@ -64,8 +64,8 @@ country_zip_code *organize_database(country_zip_code **countries, int countries_
 	}
 
 #ifdef	DEBUG
-	printf("\n\n%d\n\n", n_addresses);
-
+    printf("\n\nnumero de endereços: %d\n\n", n_addresses);
+    
 	for(i=0; i<countries_len; i++){
 		printf("%d\t%d\t%d\n", i, country_get_tamanho(countries[i]), index_country[i]);
 	}
@@ -77,4 +77,39 @@ country_zip_code *organize_database(country_zip_code **countries, int countries_
 
 	return one_archive;
 }
+
+/* ------------------------------------- */
+/* Funcao para escrever um unico arquivo */
+/* ------------------------------------- */
+
+void write_file(const char* file_path, country_zip_code* countries){
+
+    if (file_path == NULL || countries == NULL){
+        fprintf(stderr, "write_file: ponteiros invalidos\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    FILE* file = fopen(file_path, "w");
+    if (file == NULL){
+        perror("write_file:");
+        exit(EXIT_FAILURE);
+    }
+    
+                    fprintf(file, "teste");
+    
+    zip_code **data_one_archive = country_get_data(countries);
+    
+    int n_addresses = country_get_tamanho(countries), i = 0;
+    printf("\ttamanho: %d", n_addresses);
+    
+    for(i = 0; i < n_addresses; i++){
+        fprintf(file, "%s\n", data_get_place_name(data_one_archive, i));
+        printf("%s\n", data_get_place_name(data_one_archive, i));
+    }
+    
+    
+}
+
+
+
 

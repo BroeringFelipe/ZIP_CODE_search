@@ -19,7 +19,7 @@
 typedef struct zip_codes zip_code;
 typedef struct countries_zip_codes country_zip_code;
 
-country_zip_code* create_country_zip_code();
+country_zip_code* create_country_zip_code(void);
 zip_code **create_data_vector(int array_len);
 
 void read_archive(char* file_path, country_zip_code* country);
