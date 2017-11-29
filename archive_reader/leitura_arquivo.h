@@ -38,4 +38,11 @@ char* data_get_place_name(zip_code **dados, int i);
 void free_zip_code(country_zip_code *country);
 
 
+/* -------------- */
+country_zip_code *organize_database(country_zip_code **countries, int countries_len);
+void write_file(const char* file_path, country_zip_code* countries);
+
+
+
+
 #endif // LEITURA_ARQUIVO_H_INCLUDED
