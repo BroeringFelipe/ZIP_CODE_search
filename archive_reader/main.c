@@ -13,7 +13,7 @@
 #include <string.h>
 
 #include "leitura_arquivo.h"
-#include "write_archive.h"
+//#include "write_archive.h"
 #include "quicksort.h"
 
 
@@ -119,7 +119,7 @@ int main(){
     
     
     //char endereco_arquivo[] = "../zipcodes_archives/arquivo_final.txt"; //Felipe
-    char endereco_arquivo[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/arquivo_final.txt"; //Ana
+    char endereco_arquivo[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/one_archive.txt"; //Ana
  
     write_file(endereco_arquivo, one_archive);
     

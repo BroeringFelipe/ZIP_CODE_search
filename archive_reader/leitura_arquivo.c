@@ -444,14 +444,15 @@ void write_file(const char* file_path, country_zip_code* countries){
     printf("\ttamanho: %d", n_addresses);
     
     for(i = 0; i < n_addresses; i++){
-        
-        fprintf(file, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%f\t%f\t%d\n",
+        /*fprintf(file, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%f\t%f\t%d\n",*/
+        fprintf(file, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%f\t%f\t%d\n",
                 data[i]->country_code,     data[i]->postal_code,     data[i]->place_name,
-                data[i]->admin_name1,    data[i]->admin_code1,         data[i]->admin_name2,     data[i]->admin_code2,
-                data[i]->admin_name3,     data[i]->admin_code3,         data[i]->latitude,     data[i]->longitude,
+                data[i]->admin_name1,    data[i]->admin_code1,         data[i]->admin_name2,     /*data[i]->admin_code2,*/
+                data[i]->admin_name3,     /*data[i]->admin_code3,*/         data[i]->latitude,     data[i]->longitude,
                 data[i]->accuracy);
+#ifdef DEBUG
         printf("%s\n", data_get_place_name(data, i)); 
-        
+#endif
     }
     
     fclose(file);
