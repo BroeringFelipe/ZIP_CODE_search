@@ -104,9 +104,10 @@ void write_file(const char* file_path, country_zip_code* countries){
     
     for(i = 0; i < n_addresses; i++){
         fprintf(file, "%s\n", data_get_place_name(data_one_archive, i));
-        printf("%s\n", data_get_place_name(data_one_archive, i));
+        printf("%s\n", data_get_place_name(data_one_archive, i)); //nao acabei!!!!!!!! :D
     }
     
+    fclose(file);
     
 }
 

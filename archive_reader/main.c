@@ -114,19 +114,17 @@ int main(){
 	one_archive = organize_database(countries, n_countries);
 	//imprime_zip_code(country_get_data(one_archive), country_get_tamanho(one_archive));
 
-    /* ---------------------- */
+    
     /* Escrever unico arquivo */
-    /* ---------------------- */
     
     
     //char endereco_arquivo[] = "../zipcodes_archives/arquivo_final.txt";
     char endereco_arquivo[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/arquivo_final.txt";
-    
-    //void write_file(const char* file_path, country_zip_code** countries, int countries_len)
-    
+ 
     write_file(endereco_arquivo, one_archive);
     
-    //Clear memory
+    
+    /* Clear memory */
     for(i=0; i<n_countries; i++){
         free_zip_code(countries[i]);
     }
