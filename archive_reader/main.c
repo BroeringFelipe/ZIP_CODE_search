@@ -13,7 +13,6 @@
 #include <string.h>
 
 #include "leitura_arquivo.h"
-//#include "write_archive.h"
 #include "quicksort.h"
 
 
@@ -39,8 +38,8 @@ int main(){
 	int i;
 	country_zip_code *countries[n_countries];
 	country_zip_code *one_archive;
-	//char endereco[] = "../zipcodes_archives/";
-    char endereco[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/";
+	char endereco[] = "../zipcodes_archives/";
+    //char endereco[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/";
 
     
 	for(i=0; i<n_countries; i++){
@@ -116,8 +115,8 @@ int main(){
     /* Escrever unico arquivo */
     
     
-    //char endereco_arquivo[] = "../zipcodes_archives/arquivo_final.txt"; //Felipe
-    char endereco_arquivo[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/one_archive.txt"; //Ana
+    char endereco_arquivo[] = "../zipcodes_archives/arquivo_final.txt"; //Felipe
+    //char endereco_arquivo[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/one_archive.txt"; //Ana
  
     write_file(endereco_arquivo, one_archive);
     

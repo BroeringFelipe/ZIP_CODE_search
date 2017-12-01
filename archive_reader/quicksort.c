@@ -85,7 +85,7 @@ int mediana(zip_code **dados, int esq, int dir){
 
 
 void swap_dados(zip_code **dados, int i, int j){
-	dados[i] = (uint64_t)dados[i] ^ (uint64_t)dados[j];
-	dados[j] = (uint64_t)dados[i] ^ (uint64_t)dados[j];
-	dados[i] = (uint64_t)dados[i] ^ (uint64_t)dados[j];
+	dados[i] = (zip_code*)((uint64_t)dados[i] ^ (uint64_t)dados[j]); //((uint64_t)dados[i] ^ (uint64_t)dados[j])
+	dados[j] = (zip_code*)((uint64_t)dados[i] ^ (uint64_t)dados[j]);
+	dados[i] = (zip_code*)((uint64_t)dados[i] ^ (uint64_t)dados[j]);
 }

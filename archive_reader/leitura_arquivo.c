@@ -13,8 +13,6 @@
 #include <string.h>
 #include <stdint.h>
 #include "leitura_arquivo.h"
-#include "../lista_enc/no.h"
-#include "../lista_enc/lista_enc.h"
 
 #define length_buffer 50
 #undef DEBUG
@@ -66,15 +64,7 @@ zip_code **create_data_vector(int array_len){
 void country_set_tamanho(country_zip_code* country, int array_len){
 	country->tamanho = array_len;
 }
-/*
-void data_array_set_data(zip_code **data_array, zip_code *data, int i){
-	data_array[i]=data;
-}
 
-void data_array_set_data(zip_code **data_array, zip_code *data, int i){
-	return data_array[i]->data;
-}
-*/
 void read_archive(char* file_path, country_zip_code* country){
 
 #ifdef DEBUG
