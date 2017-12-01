@@ -111,8 +111,6 @@ int main(){
 #endif
 
 
-	printf("\n\n\n");
-
 	one_archive = organize_database(countries, n_countries);
 	//imprime_zip_code(country_get_data(one_archive), country_get_tamanho(one_archive));
 
