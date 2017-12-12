@@ -9,8 +9,9 @@
 
 #undef DEBUG
 
-int main()
-{
+int main(){
+	char cidade[100];
+	char pais[3];
 	char nome_arquivos[83][3] = {	"AD", "AR", "AS", "AT", "AU", "AX", "BD", "BE", "BG", "BM", "BR", "BY", "CA",
 									"CH", "CO", "CR", "CZ", "DE", "DK", "DO", "DZ", "ES", "FI", "FO", "FR", "GB",
 									"GF", "GG", "GL", "GP", "GT", "GU", "HR", "HU", "IE", "IM", "IN", "IS", "IT",
@@ -18,6 +19,7 @@ int main()
 									"MT", "MX", "MY", "NC", "NL", "NO", "NZ", "PH", "PK", "PL", "PM", "PR", "PT",
 									"RE", "RO", "RU", "SE", "SI", "SJ", "SK", "SM", "TH", "TR", "UA", "US", "UY",
 									"VA", "VI", "WF", "YT", "ZA"    };
+
 
 	const char endereco_arquivo[] = "../zipcodes_archives/one_archive.txt"; //Felipe
 	//char endereco_arquivo[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/one_archive.txt"; //Ana
@@ -27,6 +29,7 @@ int main()
 	lista_enc_t *zipcode_list;
 
 	int i, j;
+
 
 	for(j = 0; j<255; j++){
 		for(i = 0; i<83; i++){
@@ -47,9 +50,22 @@ for(j = 0; j<255; j++){
 }
 #endif
 
-	free_zipcode_list(zipcode_list);
 
-	return 0;
+    puts("CODIGO\tPAIS\n");
+    for(i = 0; i < 83; i++){
+        printf("%d:\t%s", i + 1, nome_arquivos[i]);
+    }
+    puts("Digite o nome da cidade da qual voce deseja realizar a busca:\n");
+    scanf("%s", cidade);
+    puts("Caso voce saiba, digite o nome do pais que ela pertence:\n");
+    scanf("%s", pais);
+
+
+
+	free_zipcode_list(zipcode_list);
+    
+
+    return 0;
 }
 
 
