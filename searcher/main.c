@@ -50,7 +50,7 @@ for(j = 0; j<255; j++){
 }
 #endif
 
-	int i = 0;
+
     puts("Programa para busca de CEP a partir do nome de uma cidade.\n");
     puts("Voce pode fazer a busca somente pelo nome da cidade ou a-\ndicionar tambem o pais para tornar a busca mais rapida.\n\n");
     puts("- - - Tabela de codigo referente a cada pais - - -");
@@ -63,6 +63,10 @@ for(j = 0; j<255; j++){
     puts("Caso voce saiba, digite o nome do pais que ela pertence:\n");
     scanf("%d", &country);
     
+    search_city(hash_table, place_name, country);
+
+    free_zipcode_list(zipcode_list);
+
     return 0;
 }
 
