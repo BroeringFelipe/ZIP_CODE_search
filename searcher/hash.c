@@ -262,11 +262,6 @@ void search_city(no_t *hash_table[255][83], char* place_name, int country){
 
 	no_list = hash_table[letter][country-1];
 
-	//if(no_list == NULL){
-	//	return;
-	//}
-
-
 
 	for(;no_list != NULL; no_list = obtem_proximo(no_list)){
 
