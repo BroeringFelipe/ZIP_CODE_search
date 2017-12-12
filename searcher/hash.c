@@ -56,22 +56,7 @@ lista_enc_t ***create_hash_table(const char* file_path, int* n_characters, int* 
     }
 
     i=0;
-    while(fgets(buffer, 300, arquivo) != NULL){
-    	char country_code_tmp[3];
-    	i++;	//Count number of lines
-    	unsigned char last_character = 0, new_character = 0;
 
-        ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",country_code_tmp);
-        ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",postal_code_temp);
-        ret = sscanf((char*)((uint64_t)buffer+(uint64_t)incremento_buffer),"%80[^\t]\t",place_name_temp);
-
-        if(ret != 0){
-        	new_character = (unsigned char)place_name_temp[0];
-			place_name_temp[0] = '\0';
-			incremento_buffer += 1;
-		}
-
-    }
 
     tamanho = i;
     //data_vector = create_data_vector(i);
