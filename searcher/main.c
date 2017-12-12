@@ -50,21 +50,19 @@ for(j = 0; j<255; j++){
 }
 #endif
 
-
-    puts("CODIGO\tPAIS\n");
-    for(i = 0; i < 83; i++){
-        printf("%d:\t%s", i + 1, nome_arquivos[i]);
-    }
-    puts("Digite o nome da cidade da qual voce deseja realizar a busca:\n");
-    scanf("%s", cidade);
-    puts("Caso voce saiba, digite o nome do pais que ela pertence:\n");
-    scanf("%s", pais);
-
-
-
-	free_zipcode_list(zipcode_list);
+    int i = 0;
+    puts("Programa para busca de CEP a partir do nome de uma cidade.\n");
+    puts("Voce pode fazer a busca somente pelo nome da cidade ou a-\ndicionar tambem o pais para tornar a busca mais rapida.\n\n");
+    puts("- - - Tabela de codigo referente a cada pais - - -");
+    for(i = 0; i < 21; i++)
+        printf("\n %02d:\t%s\t\t%d:\t%s\t\t%d:\t%s\t\t%d:\t%s\t",    i + 1, nome_arquivos[i], i + 22, nome_arquivos[i+21],
+               i + 43, nome_arquivos[i+42], i + 64, nome_arquivos[i+63]);
     
-
+    puts("\nDigite o nome da cidade da qual voce deseja realizar a busca:\n");
+    //scanf("%s", cidade);
+    puts("Caso voce saiba, digite o nome do pais que ela pertence:\n");
+    //scanf("%s", pais);
+    
     return 0;
 }
 
