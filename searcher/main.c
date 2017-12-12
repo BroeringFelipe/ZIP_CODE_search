@@ -4,6 +4,11 @@
 #include "lista_enc/no.h"
 #include "hash.h"
 
+#define N_CHARACTERS 255
+#define N_COUNTRIES 83
+
+#undef DEBUG
+
 int main()
 {
 	char nome_arquivos[83][3] = {	"AD", "AR", "AS", "AT", "AU", "AX", "BD", "BE", "BG", "BM", "BR", "BY", "CA",
@@ -14,20 +19,37 @@ int main()
 									"RE", "RO", "RU", "SE", "SI", "SJ", "SK", "SM", "TH", "TR", "UA", "US", "UY",
 									"VA", "VI", "WF", "YT", "ZA"    };
 
-	const char endereco_arquivo[] = "../zipcodes_archives/arquivo_final.txt"; //Felipe
+	const char endereco_arquivo[] = "../zipcodes_archives/one_archive.txt"; //Felipe
 	//char endereco_arquivo[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/one_archive.txt"; //Ana
 
-	int n_characters, n_countries;
+	no_t *hash_table[N_CHARACTERS][N_COUNTRIES];
 
-	lista_enc_t ***hash_table;
+	lista_enc_t *zipcode_list;
 
-	hash_table = create_hash_table(endereco_arquivo, &n_characters, &n_countries);
+	int i, j;
 
+	for(j = 0; j<255; j++){
+		for(i = 0; i<83; i++){
+			hash_table[j][i] = NULL;
+		}
+	}
 
+	zipcode_list = create_hash_table(endereco_arquivo, hash_table, N_CHARACTERS, N_COUNTRIES);
 
-    printf("Hello world!\n");
-    return 0;
+#ifdef DEBUG
+for(j = 0; j<255; j++){
+	for(i = 0; i<83; i++){
+		if(hash_table[j][i] != NULL){
+			printf("%d\t%d\t%p\t%s\t%s\n", j, i, hash_table[j][i], no_get_country_code(hash_table[j][i]), no_get_place_name(hash_table[j][i]));
+		}
+	}
+	printf("\n\n");
+}
+#endif
 
+	free_zipcode_list(zipcode_list);
+
+	return 0;
 }
 
 

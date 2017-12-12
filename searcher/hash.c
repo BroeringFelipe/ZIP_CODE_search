@@ -27,26 +27,26 @@ struct zip_codes {
     short int accuracy;
 };
 
-lista_enc_t ***create_hash_table(const char* file_path, int* n_characters, int* n_countries){
+char country_codes[83][3] = {	"AD", "AR", "AS", "AT", "AU", "AX", "BD", "BE", "BG", "BM", "BR", "BY", "CA",
+								"CH", "CO", "CR", "CZ", "DE", "DK", "DO", "DZ", "ES", "FI", "FO", "FR", "GB",
+								"GF", "GG", "GL", "GP", "GT", "GU", "HR", "HU", "IE", "IM", "IN", "IS", "IT",
+								"JE", "JP", "LI", "LK", "LT", "LU", "LV", "MC", "MD", "MH", "MK", "MP", "MQ",
+								"MT", "MX", "MY", "NC", "NL", "NO", "NZ", "PH", "PK", "PL", "PM", "PR", "PT",
+								"RE", "RO", "RU", "SE", "SI", "SJ", "SK", "SM", "TH", "TR", "UA", "US", "UY",
+								"VA", "VI", "WF", "YT", "ZA"    };
 
-    char nome_arquivos[83][3] = {    "AD", "AR", "AS", "AT", "AU", "AX", "BD", "BE", "BG", "BM", "BR", "BY", "CA",
-        "CH", "CO", "CR", "CZ", "DE", "DK", "DO", "DZ", "ES", "FI", "FO", "FR", "GB",
-        "GF", "GG", "GL", "GP", "GT", "GU", "HR", "HU", "IE", "IM", "IN", "IS", "IT",
-        "JE", "JP", "LI", "LK", "LT", "LU", "LV", "MC", "MD", "MH", "MK", "MP", "MQ",
-        "MT", "MX", "MY", "NC", "NL", "NO", "NZ", "PH", "PK", "PL", "PM", "PR", "PT",
-        "RE", "RO", "RU", "SE", "SI", "SJ", "SK", "SM", "TH", "TR", "UA", "US", "UY",
-        "VA", "VI", "WF", "YT", "ZA"    };
+lista_enc_t *create_hash_table(const char* file_path, no_t *hash_table[255][83], int n_characters, int n_countries){
     
 #ifdef DEBUG
 	uint64_t zip_code_count = 0;
 #endif
-    lista_enc_t *hash_table[256][83];
-    lista_enc_t *zipcode_list;// = cria_lista_enc();
-    zip_code* data = NULL;
-    //zip_code** data_vector;
-    //country = (country_zip_code*)malloc(sizeof(country_zip_code));
-    int i = 0, j = 0;
-    int tamanho;
+
+    lista_enc_t *zipcode_list = cria_lista_enc();
+    zip_code *data = NULL;
+    no_t *no_data = NULL;
+
+    int i = 0;
+
 
     char buffer[300];
 
@@ -55,7 +55,6 @@ lista_enc_t ***create_hash_table(const char* file_path, int* n_characters, int* 
 			admin_name3_temp[length_buffer],	count_char_incremento_buffer[length_buffer];
 
     char    country_code_comp[3];
-    unsigned char place_name_comp;
     
     uint64_t incremento_buffer;
     int ret = 0;
@@ -72,19 +71,11 @@ lista_enc_t ***create_hash_table(const char* file_path, int* n_characters, int* 
 
     //rewind(arquivo);
     
-    place_name_temp[0] = '\0';
-    place_name_comp = 0;
+
     country_code_comp[0] = '\0';
     
-    
     i=-1;
-    j=-1;
     while(fgets(buffer, 300, arquivo) != NULL)  {
-        
-        if(data != NULL){
-            place_name_comp = (unsigned char)data->place_name[0];
-            strncpy(country_code_comp, data->country_code, 3);
-        }
         
     	data = malloc(sizeof(zip_code));
         data->country_code[0] = '\0';
@@ -202,19 +193,17 @@ lista_enc_t ***create_hash_table(const char* file_path, int* n_characters, int* 
         if (data->admin_name3 == NULL) exit (1);
         strncpy(data->admin_name3, admin_name3_temp, strlen(admin_name3_temp) + 1);
         
-        if(place_name_comp != (unsigned char)data->place_name[0]){
-            
-            if(strcmp(country_code_comp, data->country_code) != 0){
-                j++;
-            }
-            
-            
-            hash_table[i][j] = zipcode_list;
-        }
+        no_data = cria_no(data);
+
+		if(strcmp(country_code_comp, data->country_code) != 0){
+			for(i = 0;strcmp(data->country_code, country_codes[i]) != 0; i++);
+			hash_table[((unsigned char)data->place_name[0])][i] = no_data;
+		}
         
+		strncpy(country_code_comp, data->country_code, 3);
         
-        add_cauda(zipcode_list, cria_no(data));
-        i++;
+        add_cauda(zipcode_list, no_data);
+
 
 #ifdef DEBUG
 
@@ -233,5 +222,42 @@ lista_enc_t ***create_hash_table(const char* file_path, int* n_characters, int* 
 
     //country->data = data_vector;
     
-    return hash_table;
+    return zipcode_list;
+}
+
+void free_zipcode_list(lista_enc_t *zipcode_list){
+	no_t *no_lista;
+	no_t *no_lista_anterior;
+	zip_code *data;
+
+	no_lista = obtem_cabeca(zipcode_list);
+
+	while(no_lista != NULL){
+		data = obtem_dado (no_lista);
+		free(data->postal_code);
+		free(data->place_name);
+		free(data->admin_name1);
+		free(data->admin_name2);
+		free(data->admin_name3);
+		free(data->admin_code1);
+		free(data);
+		no_lista_anterior = no_lista;
+		no_lista = obtem_proximo (no_lista);
+		free(no_lista_anterior);
+	}
+
+	free(zipcode_list);
+
+}
+
+char *no_get_country_code(no_t *no){
+	zip_code *data;
+	data = obtem_dado(no);
+	return data->country_code;
+}
+
+char *no_get_place_name(no_t *no){
+	zip_code *data;
+	data = obtem_dado(no);
+	return data->place_name;
 }
