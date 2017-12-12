@@ -224,7 +224,7 @@ lista_enc_t *create_hash_table(const char* file_path, no_t *hash_table[255][83],
     
     return zipcode_list;
 }
-/*
+
 void free_zipcode_list(lista_enc_t *zipcode_list){
 	no_t *no_lista;
 	no_t *no_lista_anterior;
@@ -260,83 +260,29 @@ void search_city(no_t *hash_table[255][83], char* place_name, int country){
 	letter = (unsigned char)place_name[0];
 	place_name_lenght = strlen(place_name);
 
-	no_list = hash_table[letter][country];
+	no_list = hash_table[letter][country-1];
 
-	if(no_list == NULL){
-		return;
-	}
+	//if(no_list == NULL){
+	//	return;
+	//}
 
-	data = obtem_dado (no_list);
 
-	while((letter == (unsigned char)data->place_name[0]) && ((strcmp(country_codes[country], data->country_code) == 0))){
-		if(strncmp(place_name, data->place_name,place_name_lenght) == 0){
-			 printf("%s: %s %s %s %s %s %s %f %f %d\n\n",
-					 	data->place_name, 	data->country_code, data->postal_code, data->admin_name1,
-						data->admin_code1, 	data->admin_name2, 	data->admin_name3, data->latitude,
-						data->longitude, 	data->accuracy);
+
+	for(;no_list != NULL; no_list = obtem_proximo(no_list)){
+
+		data = obtem_dado(no_list);
+
+		if((letter == (unsigned char)(data->place_name[0])) && ((strcmp(country_codes[country-1], data->country_code) == 0))){
+
+			if(strncmp(place_name, data->place_name,place_name_lenght) == 0){
+				 printf("%s: %s %s %s %s %s %s %f %f %d\n\n",
+							data->place_name, 	data->country_code, data->postal_code, data->admin_name1,
+							data->admin_code1, 	data->admin_name2, 	data->admin_name3, data->latitude,
+							data->longitude, 	data->accuracy);
+			}
 		}
 
 	}
-
-
-
-}
-*/
-void free_zipcode_list(lista_enc_t *zipcode_list){
-	no_t *no_lista;
-	no_t *no_lista_anterior;
-	zip_code *data;
-
-	no_lista = obtem_cabeca(zipcode_list);
-
-	while(no_lista != NULL){
-		data = obtem_dado (no_lista);
-		free(data->postal_code);
-		free(data->place_name);
-		free(data->admin_name1);
-		free(data->admin_name2);
-		free(data->admin_name3);
-		free(data->admin_code1);
-		free(data);
-		no_lista_anterior = no_lista;
-		no_lista = obtem_proximo (no_lista);
-		free(no_lista_anterior);
-	}
-
-	free(zipcode_list);
-
-}
-
-void search_city(no_t *hash_table[255][83], char* place_name, int country){
-	int place_name_lenght;
-	unsigned char letter;
-
-	no_t *no_list;
-	zip_code *data;
-
-	letter = (unsigned char)place_name[0];
-	place_name_lenght = strlen(place_name);
-
-	no_list = hash_table[letter][country];
-
-	if(no_list == NULL){
-		return;
-	}
-
-	data = obtem_dado (no_list);
-
-	while((letter == (unsigned char)data->place_name[0]) && ((strcmp(country_codes[country], data->country_code) == 0))){
-		if(strncmp(place_name, data->place_name,place_name_lenght) == 0){
-			 printf("%s: %s %s %s %s %s %s %f %f %d\n\n",
-					 	data->place_name, 	data->country_code, data->postal_code, data->admin_name1,
-						data->admin_code1, 	data->admin_name2, 	data->admin_name3, data->latitude,
-						data->longitude, 	data->accuracy);
-		}
-
-	}
-
-
-
 }
 
 
