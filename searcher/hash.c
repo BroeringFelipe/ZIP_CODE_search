@@ -29,16 +29,23 @@ struct zip_codes {
 
 lista_enc_t ***create_hash_table(const char* file_path, int* n_characters, int* n_countries){
 
+    char nome_arquivos[83][3] = {    "AD", "AR", "AS", "AT", "AU", "AX", "BD", "BE", "BG", "BM", "BR", "BY", "CA",
+        "CH", "CO", "CR", "CZ", "DE", "DK", "DO", "DZ", "ES", "FI", "FO", "FR", "GB",
+        "GF", "GG", "GL", "GP", "GT", "GU", "HR", "HU", "IE", "IM", "IN", "IS", "IT",
+        "JE", "JP", "LI", "LK", "LT", "LU", "LV", "MC", "MD", "MH", "MK", "MP", "MQ",
+        "MT", "MX", "MY", "NC", "NL", "NO", "NZ", "PH", "PK", "PL", "PM", "PR", "PT",
+        "RE", "RO", "RU", "SE", "SI", "SJ", "SK", "SM", "TH", "TR", "UA", "US", "UY",
+        "VA", "VI", "WF", "YT", "ZA"    };
+    
 #ifdef DEBUG
 	uint64_t zip_code_count = 0;
 #endif
-
-	//lista_enc_t *hash_table[][];
-	lista_enc_t *zipcode_list;
-    zip_code* data;
+    lista_enc_t *hash_table[256][83];
+    lista_enc_t *zipcode_list;// = cria_lista_enc();
+    zip_code* data = NULL;
     //zip_code** data_vector;
     //country = (country_zip_code*)malloc(sizeof(country_zip_code));
-    int i = 0;
+    int i = 0, j = 0;
     int tamanho;
 
     char buffer[300];
@@ -47,6 +54,9 @@ lista_enc_t ***create_hash_table(const char* file_path, int* n_characters, int* 
 			admin_code1_temp[length_buffer],	admin_name2_temp[length_buffer],
 			admin_name3_temp[length_buffer],	count_char_incremento_buffer[length_buffer];
 
+    char    country_code_comp[3];
+    unsigned char place_name_comp;
+    
     uint64_t incremento_buffer;
     int ret = 0;
     FILE * arquivo = fopen(file_path, "r");
@@ -55,19 +65,32 @@ lista_enc_t ***create_hash_table(const char* file_path, int* n_characters, int* 
         exit(EXIT_FAILURE);
     }
 
-    i=0;
+    //i=0;
 
-
-    tamanho = i;
+    //tamanho = i;
     //data_vector = create_data_vector(i);
 
-    rewind(arquivo);
-
-    i=0;
+    //rewind(arquivo);
+    
+    place_name_temp[0] = '\0';
+    place_name_comp = 0;
+    country_code_comp[0] = '\0';
+    
+    
+    i=-1;
+    j=-1;
     while(fgets(buffer, 300, arquivo) != NULL)  {
-
+        
+        if(data != NULL){
+            place_name_comp = (unsigned char)data->place_name[0];
+            strncpy(country_code_comp, data->country_code, 3);
+        }
+        
     	data = malloc(sizeof(zip_code));
-
+        data->country_code[0] = '\0';
+        
+        //data = calloc(1, sizeof(zip_code));
+        
     	incremento_buffer = 0;
 
 
@@ -178,7 +201,18 @@ lista_enc_t ***create_hash_table(const char* file_path, int* n_characters, int* 
         data->admin_name3 = malloc(strlen(admin_name3_temp) + 1);
         if (data->admin_name3 == NULL) exit (1);
         strncpy(data->admin_name3, admin_name3_temp, strlen(admin_name3_temp) + 1);
-
+        
+        if(place_name_comp != (unsigned char)data->place_name[0]){
+            
+            if(strcmp(country_code_comp, data->country_code) != 0){
+                j++;
+            }
+            
+            
+            hash_table[i][j] = zipcode_list;
+        }
+        
+        
         add_cauda(zipcode_list, cria_no(data));
         i++;
 
@@ -186,7 +220,7 @@ lista_enc_t ***create_hash_table(const char* file_path, int* n_characters, int* 
 
 	zip_code_count++;
 
-        printf("%llu\t%s %s %s %s %s %s %s %s %s %f %f %d\n\n",
+        printf("%llu\t%s %s %s %s %s %s %s %f %f %d\n\n",
 			zip_code_count,		data->country_code, 	data->postal_code, data->place_name,
 			data->admin_name1,	data->admin_code1, 	data->admin_name2,
 			data->admin_name3, 	data->latitude, 	data->longitude,
@@ -198,5 +232,6 @@ lista_enc_t ***create_hash_table(const char* file_path, int* n_characters, int* 
     fclose(arquivo);
 
     //country->data = data_vector;
-
+    
+    return hash_table;
 }
