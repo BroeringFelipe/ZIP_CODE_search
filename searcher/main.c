@@ -48,6 +48,10 @@ for(j = 0; j<255; j++){
     puts("Caso voce saiba, digite o nome do pais que ela pertence:\n");
     scanf("%d", &country);
     
+    //char letter = 'S';
+
+    //printf("%d\t%s", country, place_name);
+    //printf("%p", hash_table[(unsigned char)letter][country]);
     search_city(hash_table, place_name, country);
 
     free_zipcode_list(zipcode_list);
