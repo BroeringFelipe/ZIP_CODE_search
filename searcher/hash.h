@@ -17,6 +17,8 @@ lista_enc_t *create_hash_table(const char* file_path, no_t *hash_table[255][83],
 
 void free_zipcode_list(lista_enc_t *zipcode_list);
 
+void search_city(no_t *hash_table[255][83], char* place_name, int country);
+
 char *no_get_country_code(no_t *no);
 char *no_get_place_name(no_t *no);
 

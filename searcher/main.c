@@ -10,8 +10,8 @@
 #undef DEBUG
 
 int main(){
-	char cidade[100];
-	char pais[3];
+	char place_name[100];
+	int country;
 	char nome_arquivos[83][3] = {	"AD", "AR", "AS", "AT", "AU", "AX", "BD", "BE", "BG", "BM", "BR", "BY", "CA",
 									"CH", "CO", "CR", "CZ", "DE", "DK", "DO", "DZ", "ES", "FI", "FO", "FR", "GB",
 									"GF", "GG", "GL", "GP", "GT", "GU", "HR", "HU", "IE", "IM", "IN", "IS", "IT",
@@ -53,16 +53,14 @@ for(j = 0; j<255; j++){
 
     puts("CODIGO\tPAIS\n");
     for(i = 0; i < 83; i++){
-        printf("%d:\t%s", i + 1, nome_arquivos[i]);
+        printf("%d:\t%s\t", i + 1, nome_arquivos[i]);
     }
-    puts("Digite o nome da cidade da qual voce deseja realizar a busca:\n");
-    scanf("%s", cidade);
+    puts("\nDigite o nome da cidade da qual voce deseja realizar a busca:\n");
+    scanf("%s", place_name);
     puts("Caso voce saiba, digite o nome do pais que ela pertence:\n");
-    scanf("%s", pais);
+    scanf("%d", &country);
 
-
-
-	free_zipcode_list(zipcode_list);
+    search_city(hash_table, place_name, country);
     
 
     return 0;
