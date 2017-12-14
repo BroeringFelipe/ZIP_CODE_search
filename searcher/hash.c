@@ -14,6 +14,10 @@
 
 #define length_buffer 150
 
+#define DEBUG_TIME
+#undef  DEBUG_LIST
+
+
 struct zip_codes {
     char country_code[3];
     char* postal_code;
@@ -37,7 +41,7 @@ char country_codes[83][3] = {	"AD", "AR", "AS", "AT", "AU", "AX", "BD", "BE", "B
 
 lista_enc_t *create_hash_table(const char* file_path, no_t *hash_table[255][83], int n_characters, int n_countries){
     
-#ifdef DEBUG
+#ifdef DEBUG_LIST
 	uint64_t zip_code_count = 0;
 #endif
 
@@ -205,7 +209,7 @@ lista_enc_t *create_hash_table(const char* file_path, no_t *hash_table[255][83],
         add_cauda(zipcode_list, no_data);
 
 
-#ifdef DEBUG
+#ifdef DEBUG_LIST
 
 	zip_code_count++;
 
@@ -251,44 +255,81 @@ void free_zipcode_list(lista_enc_t *zipcode_list){
 }
 
 void search_city(no_t *hash_table[255][83], char* place_name, int country){
+	int i;
 	int place_name_lenght;
 	unsigned char letter;
 
-	no_t *no_list;
+	no_t *no_list = NULL;
 	zip_code *data;
 
 	letter = (unsigned char)place_name[0];
 	place_name_lenght = strlen(place_name);
 
-	no_list = hash_table[letter][country-1];
+	if(country < 84){
+		no_list = hash_table[letter][country-1];
+	}else{
+		for(i = 0; (no_list == NULL) && (i<83); i++){
+			no_list = hash_table[letter][i];
+		}
+	}
 
-
-	for(;no_list != NULL; no_list = obtem_proximo(no_list)){
+	for(i = 0;no_list != NULL; no_list = obtem_proximo(no_list)){
 
 		data = obtem_dado(no_list);
 
-		if((letter == (unsigned char)(data->place_name[0])) && ((strcmp(country_codes[country-1], data->country_code) == 0))){
-
+		if((letter == (unsigned char)(data->place_name[0])) && ((strcmp(country_codes[country-1], data->country_code) == 0) || country == 84)){
+			i++;
 			if(strncmp(place_name, data->place_name,place_name_lenght) == 0){
-				 printf("%s: %s %s %s %s %s %s %f %f %d\n\n",
+				 printf("%s: %s %s %s %s %s %s %f %f %d\n",
 							data->place_name, 	data->country_code, data->postal_code, data->admin_name1,
 							data->admin_code1, 	data->admin_name2, 	data->admin_name3, data->latitude,
 							data->longitude, 	data->accuracy);
 			}
 		}
-
+	}
+	if(i == 0){
+		printf("Nenhuma cidade encontrada");
 	}
 }
 
 
-char *no_get_country_code(no_t *no){
+#ifdef DEBUG_TIME
+
+void search_city_without_hashtable(lista_enc_t *zipcode_list, char* place_name, int country){
+	int i;
+	int place_name_lenght;
+
+	no_t *no_list;
 	zip_code *data;
-	data = obtem_dado(no);
-	return data->country_code;
+
+
+	place_name_lenght = strlen(place_name);
+
+	no_list = obtem_cabeca(zipcode_list);
+
+
+
+
+	for(i = 0;no_list != NULL; no_list = obtem_proximo(no_list)){
+
+		data = obtem_dado(no_list);
+
+		if((strcmp(country_codes[country-1], data->country_code) == 0) || country == 84){
+			i++;
+			if(strncmp(place_name, data->place_name,place_name_lenght) == 0){
+				 printf("%s: %s %s %s %s %s %s %f %f %d\n",
+							data->place_name, 	data->country_code, data->postal_code, data->admin_name1,
+							data->admin_code1, 	data->admin_name2, 	data->admin_name3, data->latitude,
+							data->longitude, 	data->accuracy);
+			}
+
+		}
+
+	}
+
+	if(i == 0){
+		printf("Nenhuma cidade encontrada");
+	}
 }
 
-char *no_get_place_name(no_t *no){
-	zip_code *data;
-	data = obtem_dado(no);
-	return data->place_name;
-}
+#endif
