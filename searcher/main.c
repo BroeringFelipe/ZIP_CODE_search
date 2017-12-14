@@ -140,11 +140,15 @@ int main(){
     
     printf("\n\nDigite o nome da cidade da qual voce deseja realizar a busca: ");
 
+
     scanf("%99[^\n]", place_name);
+    getchar();
 
     printf("\nCaso voce saiba, digite o nome do pais que ela pertence: ");
 
     scanf("%d", &country);
+    getchar();
+
     printf("\n");
 
 
@@ -228,7 +232,7 @@ int main(){
     printf("Se voce deseja fazer outra busca, digite 'y', caso queira encerrar o programa, digite qualquer tecla:\n");
 
     scanf("%c", &keyboard);
-    //scanf("%c", &keyboard);
+    getchar();
 
     }while(keyboard == 'y');
 
