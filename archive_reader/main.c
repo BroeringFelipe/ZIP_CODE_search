@@ -161,7 +161,7 @@ imprime_zip_code(country_get_data(one_archive), country_get_tamanho(one_archive)
     /* Escrever unico arquivo */
     
     
-    char endereco_arquivo[] = "../zipcodes_archives/arquivo_final.txt"; //Felipe
+    char endereco_arquivo[] = "../zipcodes_archives/one_archive.txt"; //Felipe
     //char endereco_arquivo[] = "/Users/aninhabanderchuk/Google Drive/Engenharia Eletrônica/* 5˚ Fase */5. Programação de Computadores II/PRG: Trabalho Final - CEP/ZIP_CODE_search/zipcodes_archives/one_archive.txt"; //Ana
  
     write_file(endereco_arquivo, one_archive);
